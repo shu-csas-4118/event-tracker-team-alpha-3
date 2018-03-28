@@ -1,7 +1,9 @@
-﻿module.exports = (function (env) {
+﻿module.exports = (function (env) 
+{
     var config = {};
 
-    switch(env) {
+    switch(env) 
+    {
         case 'test':
             config = require('./env/test');
             break;

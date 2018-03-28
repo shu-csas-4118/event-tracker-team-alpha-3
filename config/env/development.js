@@ -1,14 +1,18 @@
-﻿module.exports = {
+﻿module.exports = 
+{
     debug: true,
     cookieSecret: 'f1e55aec-c9c0-4639-bf47-f4a0e3e1618f',
-    server: {
+    server: 
+    {
         host: "127.0.0.1",
         port: 8081
     },
-    mongodb: {
+    mongodb:
+    {
         url: ""
     },
-    logger: {
+    logger: 
+    {
         logLevel:  'debug', // Default to this if the environment variable LOG_LEVEL is not set
         logPath: '/var/log',
         errorLog: 'errors.log',
