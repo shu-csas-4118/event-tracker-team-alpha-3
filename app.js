@@ -47,11 +47,12 @@ app.use(function(err, req, res, next)
 
 var server = app.listen(8081, function()
 {
-  console.log('Listening on prot 8081');
+  console.log('Listening on port 8081');
 });
+
 server.setTimeout(0, function()
 {
-  console.log('Server timed  out');
+  console.log('Server timed out');
 });
 
 module.exports = app;

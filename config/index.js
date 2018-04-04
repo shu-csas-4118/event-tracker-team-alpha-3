@@ -14,7 +14,7 @@
         default:
             console.log('No environment set. Defaulting to development');
             config = require('./env/development');
-            break;;
+            break;
     }
 
     return config;
