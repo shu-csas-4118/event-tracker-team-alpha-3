@@ -45,4 +45,13 @@ app.use(function(err, req, res, next)
   res.render('error');
 });
 
+var server = app.listen(8081, function()
+{
+  console.log('Listening on prot 8081');
+});
+server.setTimeout(0, function()
+{
+  console.log('Server timed  out');
+});
+
 module.exports = app;
