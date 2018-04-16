@@ -1,0 +1,36 @@
+<h1>{{title}}</h1>
+<span id="welcome-text">Welcome to the Event Tracker System</span>
+<br/>
+<div id="my-form">
+    <form action="http://localhost:8081/login" method="post">
+        <div>
+            <label class="label" for="mail">E-mail:</label>
+            <input type="email" id="mail" name="user_mail">
+        </div>
+        <div>
+            <label for="password">Password:</label>
+            <input type="password" id="password" name="password">
+        </div>
+
+        <div>
+            <input type="submit" id="submit" value="Login"
+                   onclick="return validateForm();">
+        </div>
+    </form>
+</div>
+<script lang="Javascript">
+    function validateForm() {
+        var email = document.getElementById("mail");
+        var password = document.getElementById("password");
+
+        if(email.value === "") {
+            alert("Please enter an email.");
+            return false;
+        }
+
+        var myform = document.getElementById("my-form");
+        myform.submit();
+
+        return true;
+    }
+</script>
