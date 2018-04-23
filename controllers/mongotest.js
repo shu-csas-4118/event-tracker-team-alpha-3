@@ -1,0 +1,66 @@
+import { mongo } from 'mongoose';
+
+var mongoose = require('mongoose');
+var Schema = mongoos.Schema;
+
+var accountSchema = new Schema(
+    {
+        username: String,
+        password: String
+    }
+);
+
+accountSchema.methods.login = function(username, password, callback)
+{
+    return this.model('users').findOne({username: this.type },callback);
+}
+
+module.exports = mongoos.model('users', accountSchema);
+
+
+//USER.SPEC.js
+
+'use strict';
+
+const expect = require('chai').expect;
+var mongoose = require('mongoose'); 
+const Account = require(".../models/account");
+
+describe('Tests for user account',()=> 
+{
+    before((done)=> {
+        const db = mongoose.connect('mongodb://localhost/eventtrack');
+        done();
+    })
+
+    after((done)=>{
+        mongoose.connection.close();
+        done();
+    })
+
+    beforeEach((done)=>{
+        var account = new Account({
+            username:'johndoe@shu.edu',
+            password: 'Password"'
+        });
+
+        account.save((error)=> {
+            if(error) console.log('error' + error.message);
+            done();
+        })
+    })
+
+    if('Find a user by their username', (done)=>{
+        Account.findOne({username: 'john.doe@shu.edu'},(err, account)=>{
+            expect(account.username).to.eql('john.doe@shu.edu');
+            done();
+        });
+    });
+
+    afterEach((done)=> {
+        Account.remove({},()=>{
+            done();
+        });
+    });
+
+})
