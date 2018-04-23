@@ -6,7 +6,12 @@ var Schema = mongoos.Schema;
 var accountSchema = new Schema(
     {
         username: String,
-        password: String
+        password: String,
+        firstname: String,
+        lastname: String, 
+        address: String,
+        admin?: Boolean,
+        events: Array
     }
 );
 
@@ -16,7 +21,6 @@ accountSchema.methods.login = function(username, password, callback)
 }
 
 module.exports = mongoos.model('users', accountSchema);
-
 
 //USER.SPEC.js
 
@@ -64,3 +68,7 @@ describe('Tests for user account',()=>
     });
 
 })
+
+
+
+

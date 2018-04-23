@@ -11,7 +11,7 @@
 
 class User {
 
-    constructor(email, password, firstName, lastName, address) {
+    constructor (email, password, firstName, lastName, address) {
         this._email = email;
         this._password = password;
         this._firstName = firstName;
@@ -79,4 +79,20 @@ class User {
 
 }
 
+/*import { mongo } from 'mongoose';
+var mongoose = require('mongoose');
+var Schema = mongoos.Schema;
+
+var accountSchema = new Schema(
+    {
+        username: String,
+        password: String,
+        firstname: String,
+        lastname: String, 
+        address: String,
+        admin: Boolean,
+        events: Array
+    }
+);
+*/
 module.exports = User;
