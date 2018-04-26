@@ -1,14 +1,14 @@
 <h1>{{title}}</h1>
 <span id="welcome-text">Welcome to the Event Tracker System</span>
 <br/>
-<div id="my-form">
-    <form action="http://localhost:8081/login" method="post">
+<div id="login-form">
+    <form action="http://localhost:8081/controllers/account/login" method="post">
         <div>
-            <label class="label" for="mail">E-mail:</label>
-            <input type="email" id="mail" name="user_mail">
+            <label class="label" for="username">Username</label>
+            <input type="email" id="username" name="username">
         </div>
         <div>
-            <label for="password">Password:</label>
+            <label for="password">Password</label>
             <input type="password" id="password" name="password">
         </div>
 
@@ -18,19 +18,25 @@
         </div>
     </form>
 </div>
+
+<p> Don't have an account yet? Register <a href="/account/register"> here </a></p>
+
 <script lang="Javascript">
     function validateForm() {
-        var email = document.getElementById("mail");
-        var password = document.getElementById("password");
+        const email = document.getElementById("username");
+        const password = document.getElementById("password");
 
-        if(email.value === "") {
+        if (email.value === "") {
             alert("Please enter an email.");
             return false;
         }
+        if (password.value === "") {
+            alert("Please enter a password.");
+            return false;
+        }
 
-        var myform = document.getElementById("my-form");
+        const myform = document.getElementById("login-form");
         myform.submit();
-
         return true;
     }
 </script>
