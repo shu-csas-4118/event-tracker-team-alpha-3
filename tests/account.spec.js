@@ -1,14 +1,17 @@
 'use strict';
 
+const parser = require('parse-address');
 const chai = require('chai');
 const mongoose = require('mongoose');
 const assert = chai.assert;
 const expect = chai.expect;
 const Account = require('../models/account');
+const Event = require('../models/event');
 
 describe('Account module', function () {
+
     before(function (done) {
-        const db = mongoose.connect('mongodb://localhost/eventtrack');
+        mongoose.connect('mongodb://localhost/eventtrack');
         done();
     });
 
@@ -20,7 +23,8 @@ describe('Account module', function () {
     beforeEach(function (done) {
         const account = new Account({
             username: 'johndoe@shu.edu',
-            password: 'password'
+            password: 'password',
+            admin: false
         });
 
         account.save(function (error) {
@@ -37,8 +41,74 @@ describe('Account module', function () {
         });
     });
 
-    it('should have a function to add a first name.', function () {
-        
+    it('should have a function to get the password.', function (done) {
+        Account.findOne({ username: 'johndoe@shu.edu' }, function (error, account) {
+            expect(account.password).to.eql('password');
+            done();
+        })
+    });
+
+    it('should have a function to login an account.', function (done) {
+        const acct = login('johndoe@shu.edu', 'password', {});
+        expect(acct.admin).to.eql(false);
+        done();
+    });
+
+    it('should have a function to add a first name.', function (done) {
+        Account.findOne({username: 'johndoe@shu.edu'}, function (error, account) {
+            account.first = "John";
+            expect(account.first).to.eql("John");
+            done();
+        })
+    });
+
+    it('should have a function to add a last name.', function (done) {
+        Account.findOne({ username: 'johndoe@shu.edu' }, function (error, account) {
+            account.last = "Doe";
+            expect(account.last).to.eql("Doe");
+            done();
+        })
+    });
+
+    it('should have a function to add an address.', function (done) {
+        Account.findOne({ username: 'johndoe@shu.edu' }, function (error, account) {
+            account.address = "400 South Orange Ave, South Orange NJ, 07079";
+            expect(account.address).to.eql("400 South Orange Ave, South Orange NJ, 07079");
+            done();
+        })
+    });
+
+    it('should have a function to add an event to the list of events.', function (done) {
+
+        const event = new Event('Test Event', 'janedoe@shu.edu', 'Jane Doe', "400 South Orange Ave, South Orange Nj, 07079");
+
+        Account.findOne({ username: 'johndoe@shu.edu' }, function (error, account) {
+            account.addEvent(event);
+            expect(account.events[0]).to.eql(event);
+        });
+
+        Account.findOne({ username: 'johndoe@shu.edu' }, function (error, account) {
+            account.addEvent(event);
+            account.addEvent(event);
+            expect(account.events.length).to.eql(1);
+            done();
+        });
+
+    });
+
+    it('should have a function to check the admin boolean.', function (done) {
+        Account.findOne({ username: 'johndoe@shu.edu' }, function (error, account) {
+            expect(account.admin).to.eql(false);
+            done();
+        })
+    });
+
+    it('should have a function to update the admin boolean.', function (done) {
+        Account.findOne({ username: 'johndoe@shu.edu' }, function (error, account) {
+            account.admin = true;
+            expect(account.admin).to.eql(true);
+            done();
+        })
     });
 
     afterEach(function (done) {
