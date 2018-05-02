@@ -5,12 +5,13 @@ const chai = require('chai');
 const mongoose = require('mongoose');
 const assert = chai.assert;
 const expect = chai.expect;
-const Events = require('../models/event');
-const Accounts = require('../models/account');
+const Event = require('../models/event');
+const Account = require('../models/account');
 
-describe('Account module', function () {
+describe('Event module', function () {
+
     before(function (done) {
-        const db = mongoose.connect('mongodb://localhost/eventtrack');
+        mongoose.connect('mongodb://localhost/eventtrack');
         done();
     });
 
@@ -20,16 +21,17 @@ describe('Account module', function () {
     });
 
     beforeEach(function (done) {
-        const event = new event({
-           
+        const event = new Event({
             name: 'Event Name',
             email: 'EventName@shu.edu',
             supervisor: 'Bill Sam',
             address: '123 bill ave south orange NJ',
             startDate: '12/4/18',
             endDate: '12/7/18',
-            comments: 'about event',
-            maxRegistrants: 50,
+            comments: '',
+            registrants: {},
+            maxRegistrants: 3,
+            currentRegs: 0,
             ID: 'h1245'
         });
 
@@ -40,8 +42,15 @@ describe('Account module', function () {
         })
     });
 
+    it('should have a function to find an event by name.', function (done) {
+        Event.findOne({ name: 'Event Name' }, function (error, event) {
+            expect(event.name).to.eql('Event Name');
+            done()
+        })
+    });
+
     it('should find a event by ID.', function (done) {
-        Events.findOne({ ID: 'h1245' }, function (error, event) {
+        Event.findOne({ ID: 'h1245' }, function (error, event) {
             expect(event.ID).to.eql('h1245');
             done();
         });
@@ -50,14 +59,14 @@ describe('Account module', function () {
     
 
     it('should have a function to get the name.', function (done) {
-        Events.findOne({ name: 'Event Name'}, function (error, event) {
+        Event.findOne({ name: 'Event Name'}, function (error, event) {
             expect(event.name).to.eql('Event Name');
             done();
         })
     });
 
     it('should have a function to get the email.', function (done) {
-        Events.findOne({ email: 'EventName@shu.edu'}, function (error, event) {
+        Event.findOne({ email: 'EventName@shu.edu'}, function (error, event) {
             expect(event.email).to.eql('EventName@shu.edu');
             done();
         })
@@ -65,43 +74,50 @@ describe('Account module', function () {
     
 
     it('should have a function to get the supervisor name.', function (done) {
-        Events.findOne({ supervisor: 'Bill Sam'}, function (error, event) {
+        Event.findOne({ supervisor: 'Bill Sam'}, function (error, event) {
             expect(event.supervisor).to.eql('Bill Sam');
             done();
         })
     });
 
     it('should have a function to get the address of event.', function (done) {
-        Events.findOne({address: '123 bill ave south orange NJ'}, function (error, event) {
+        Event.findOne({address: '123 bill ave south orange NJ'}, function (error, event) {
             expect(event.address).to.eql('123 bill ave south orange NJ');
             done();
         })
     });
 
     it('should have a function to get the start date.', function (done) {
-        Events.findOne({ startDate: '12/4/18'}, function (error, event) {
+        Event.findOne({ startDate: '12/4/18'}, function (error, event) {
             expect(event.startDate).to.eql('12/4/18');
             done();
         })
     });
 
     it('should have a function to get the end date.', function (done) {
-        Events.findOne({endDate:'12/7/18'}, function (error, event) {
+        Event.findOne({endDate:'12/7/18'}, function (error, event) {
             expect(event.endDate).to.eql('12/7/18');
             done();
         })
     });
 
     it('should have a function to get the comments about the event.', function (done) {
-        Events.findOne({ comments: 'about event'}, function (error, event) {
+        Event.findOne({ comments: 'about event'}, function (error, event) {
             expect(event.comments).to.eql('about event');
             done();
         })
     });
 
     it('should have a function to get the max Registrants of event.', function (done) {
-        Events.findOne({ maxRegistrants: 50}, function (error, event) {
-            expect(event.maxRegistrants).to.eql(50);
+        Event.findOne({ maxRegistrants: 1}, function (error, event) {
+            expect(event.maxRegistrants).to.eql(1);
+            done();
+        })
+    });
+
+    it('should have a function to get the max Registrants of event.', function (done) {
+        Event.findOne({ currentRegs: 0}, function (error, event) {
+            expect(event.currentRegs).to.eql(0);
             done();
         })
     });
@@ -114,22 +130,17 @@ describe('Account module', function () {
             admin: false
         });
 
-        Events.findOne({ ID: 'h1245' }, function (error, event) {
+        Event.findOne({ ID: 'h1245' }, function (error, event) {
             event.addRegistrant(account);
             expect(event.registrants[0]).to.eql(account);
         });
 
-        Account.findOne({  ID: 'h1245' }, function (error, event) {
-            account.addEvent(account);
-            account.addEvent(account);
-            expect(account.registrants.length).to.eql(1);
-            done();
-        });
+        
 
     });
           
     afterEach(function (done) {
-        Account.remove({}, function () {
+        Event.remove({}, function () {
             done();
         });
     });

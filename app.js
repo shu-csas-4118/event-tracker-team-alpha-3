@@ -4,10 +4,15 @@ const favicon = require('serve-favicon');
 const logger = require('morgan');
 const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
+const mongoose = require('mongoose');
+const passport = require('passport');
+const LocalStrategy = require('passport-local').Strategy;
+const session = require('express-session');
+const Account = require('./models/account');
 
 const index = require('./controllers/index');
-const users = require('./controllers/users');
 const account = require('./controllers/account');
+const event = require('./controllers/event');
 
 const app = express();
 
@@ -21,18 +26,32 @@ app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
+app.use(session({
+    secret: 'secret',
+    resave: false,
+    saveUninitialized: true,
+    cookie: {secure: true }
+}));
+app.use(passport.initialize());
+app.use(passport.session());
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', index);
-app.use('/users', users);
 app.use('/account', account);
+app.use('/event', event);
+
+passport.use(new LocalStrategy(Account.authenticate()));
+passport.serializeUser(Account.serializeUser());
+passport.deserializeUser(Account.deserializeUser());
+
+mongoose.connect('mongodb://localhost:27017/eventtrack');
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) 
 {
     const err = new Error('Not Found');
     err.status = 404;
-  next(err);
+    next(err);
 });
 
 // error handler

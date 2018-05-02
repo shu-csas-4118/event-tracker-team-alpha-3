@@ -15,18 +15,19 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
-var accountSchema = new Schema(
+const eventSchema = new Schema(
     {
         name: String,
-        email = String,
-        supervisor = String,
-        address = String,
-        startDate = String,
-        endDate = String,
-        comments = String,
-        registrants = Array,
-        currentRegs = Number,
-        ID = String
+        email: String,
+        supervisor: String,
+        address: String,
+        startDate: String,
+        endDate: String,
+        comments: Array,
+        registrants: Array,
+        maxRegistrants: Number,
+        currentRegs: Number,
+        ID: String
     }
 );
 
@@ -45,4 +46,3 @@ eventSchema.methods.addRegistrant = function (account) {
 const Event = mongoose.model('Event', eventSchema);
 
 module.exports = Event;
-
