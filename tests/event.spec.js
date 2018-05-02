@@ -4,11 +4,13 @@ const chai = require('chai');
 const mongoose = require('mongoose');
 const assert = chai.assert;
 const expect = chai.expect;
-const Events = require('../models/event');
+const Event = require('../models/event');
+const Account = require('../models/account');
 
-describe('Account module', function () {
+describe('Event module', function () {
+
     before(function (done) {
-        const db = mongoose.connect('mongodb://localhost/eventtrack');
+        mongoose.connect('mongodb://localhost/eventtrack');
         done();
     });
 
@@ -18,15 +20,17 @@ describe('Account module', function () {
     });
 
     beforeEach(function (done) {
-        const event = new event({
-            username: 'johndoe@shu.edu',
-            password: 'password',
+        const event = new Event({
             name: 'Event Name',
             email: 'EventName@shu.edu',
             supervisor: 'Bill Sam',
             address: '123 bill ave south orange NJ',
             startDate: '12/4/18',
             endDate: '12/7/18',
+            comments: '',
+            registrants: {},
+            maxRegistrants: 1,
+            currentRegs: 0,
             ID: 'h1245'
         });
 
@@ -37,16 +41,22 @@ describe('Account module', function () {
         })
     });
 
+    it('should have a function to find an event by name.', function (done) {
+        Event.findOne({ name: 'Event Name' }, function (error, event) {
+            expect(event.name).to.eql('Event Name');
+            done()
+        })
+    });
+
     it('should find a event by ID.', function (done) {
-        Events.findOne({ ID: 'h1245' }, function (error, event) {
+        Event.findOne({ ID: 'h1245' }, function (error, event) {
             expect(event.ID).to.eql('h1245');
             done();
         });
     });
-
           
     afterEach(function (done) {
-        Account.remove({}, function () {
+        Event.remove({}, function () {
             done();
         });
     });

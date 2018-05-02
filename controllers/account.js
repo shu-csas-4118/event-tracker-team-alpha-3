@@ -8,17 +8,24 @@ router.get('/login', function (req, res) {
 });
 
 router.post('/login', function (req, res, next) {
-    mongoose.connect('mongodb://localhost/eventtrack');
     console.log('Login form submitted');
-    const user_mail = req.get("username");
-    const account = Account.findOne({ username: user_mail}, function (error, account) {
+    const user_mail = req.body.username;
+    Account.findOne({ username: user_mail}, function (error, account) {
         if (error)
-            console.log('No user found');
-        if (account)
-            account.login(user_mail, req.get("password"), next);
-        else
-            console.log('No user found');
+            console.log('error: ' + error.message);
+        if (account) {
+            const acct = account.login(user_mail, req.get("password"), next);
+            if (acct === "Invalid-password") {
+                res.render('login', { error: 'Invalid username or password' })
+            }
+            else
+                res.redirect('/');
+        }
+        else {
+            res.render('login', { error: 'No account with that username.' })
+        }
     });
+
 });
 
 router.get('/register', function (req, res) {
@@ -26,16 +33,14 @@ router.get('/register', function (req, res) {
 });
 
 router.post('/register', function (req, res, next) {
-    mongoose.connect('mongodb://localhost/eventtrack');
-
-    const db = mongoose.connection;
 
     const account = new Account({
-        username: req.get("user_mail"),
-        password: req.get("user_password"),
-        first: req.get("user_firstname"),
-        last: req.get("user_lastname"),
-        address: req.get("user_address")
+        username: req.body.user_mail,
+        password: req.body.user_password,
+        first: req.body.user_firstname,
+        last: req.body.user_lastname,
+        admin: false,
+        address: req.body.user_address
     });
 
     account.save(function (error) {
@@ -45,7 +50,7 @@ router.post('/register', function (req, res, next) {
             console.log("Account saved successfully.");
     });
 
-    mongoose.connection.close();
+    res.redirect('/');
 });
 
 module.exports = router;

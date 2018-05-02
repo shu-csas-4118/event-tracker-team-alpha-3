@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
-const parser = require('parse-address');
 const Schema = mongoose.Schema;
+const passportLocalMongoose = require('passport-local-mongoose');
 
 /*An Account is a Mongoose Schema with the following fields:
     1. username: String representing the username of the account.
@@ -29,15 +29,20 @@ const accountSchema = new Schema({
     }
 );
 
+accountSchema.plugin(passportLocalMongoose);
+
 accountSchema.methods.login = function(username, password, callback) {
     const acct = Account.findOne({ username: username }, callback);
     if (acct) {
         if (acct.password === password)
             return acct;
         else
-            return null;
+            return "Invalid-password";
     }
+    else
+        return "No-account";
 };
+
 
 accountSchema.methods.addEvent = function (event) {
     if (!this.events.includes(event))

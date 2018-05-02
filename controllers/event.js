@@ -6,3 +6,5 @@ const Event = require('../models/event');
 router.get('/event', function (req, res) {
     res.render('event', { title: 'Login to Event Tracker System' });
 });
+
+module.exports = router;

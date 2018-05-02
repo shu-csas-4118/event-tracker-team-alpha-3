@@ -15,21 +15,34 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
-var accountSchema = new Schema(
+const eventSchema = new Schema(
     {
         name: String,
-        email = String,
-        supervisor = String,
-        address = String,
-        startDate = String,
-        endDate = String,
-        comments = Array,
-        tregistrants = Array,
-        maxRegistrants = Number,
-        ID = String
+        email: String,
+        supervisor: String,
+        address: String,
+        startDate: String,
+        endDate: String,
+        comments: Array,
+        registrants: Array,
+        maxRegistrants: Number,
+        currentRegs: Number,
+        ID: String
     }
 );
 
+eventSchema.methods.addRegistrant = function (account) {
+    if (this.currentRegs >= maxRegistrants)
+        return "Event-full";
+    else if (this.registrants.includes(account))
+        return "Already-in";
+    else {
+        this.registrants.push(account);
+        this.currentRegs++;
+        return "Account-added";
+    }
+}
 
+const Event = mongoose.model('Event', eventSchema);
 
-module.exports = roster;
+module.exports = Event;
