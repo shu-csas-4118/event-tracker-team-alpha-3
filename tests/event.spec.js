@@ -28,7 +28,7 @@ describe('Event module', function () {
             address: '123 bill ave south orange NJ',
             startDate: '12/4/18',
             endDate: '12/7/18',
-            comments: '',
+            comments: 'about event',
             registrants: {},
             maxRegistrants: 3,
             currentRegs: 0,
