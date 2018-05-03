@@ -9,7 +9,6 @@
     7. Comments: A String representing any other comments about the event.
     8. Registrants: A collection of users registered to this event.
     9. maxRegistrants: Number representing the maximum number of users registered.
-    10. ID: Number representing the ID of this event.
  */
 
 const mongoose = require('mongoose');
@@ -21,13 +20,12 @@ const eventSchema = new Schema(
         email: String,
         supervisor: String,
         address: String,
-        startDate: String,
-        endDate: String,
+        startDate: Date,
+        endDate: Date,
         comments: Array,
         registrants: Array,
         maxRegistrants: Number,
         currentRegs: Number,
-        ID: String
     }
 );
 
