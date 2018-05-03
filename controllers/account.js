@@ -14,7 +14,7 @@ router.post('/login', function (req, res, next) {
         if (error)
             console.log('error: ' + error.message);
         if (account) {
-            const acct = account.login(user_mail, req.get("password"), next);
+            const acct = account.login(user_mail, req.body.password, next);
             if (acct === "Invalid-password") {
                 res.render('login', { error: 'Invalid username or password' })
             }

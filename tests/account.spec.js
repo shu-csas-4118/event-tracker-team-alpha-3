@@ -49,9 +49,10 @@ describe('Account module', function () {
     });
 
     it('should have a function to login an account.', function (done) {
-        const acct = login('johndoe@shu.edu', 'password', {});
-        expect(acct.admin).to.eql(false);
-        done();
+        Account.findOne({ username: 'johndoe@shu.edu' }, function (error, account) {
+            expect(account.login('johndoe@shu.edu', 'password', {})).to.eql(account);
+            done();
+        })
     });
 
     it('should have a function to add a first name.', function (done) {
@@ -80,7 +81,18 @@ describe('Account module', function () {
 
     it('should have a function to add an event to the list of events.', function (done) {
 
-        const event = new Event('Test Event', 'janedoe@shu.edu', 'Jane Doe', "400 South Orange Ave, South Orange Nj, 07079");
+        const event = new Event({
+            name: 'Event Name',
+            email: 'EventName@shu.edu',
+            supervisor: 'Bill Sam',
+            address: '123 bill ave south orange NJ',
+            startDate: '12/4/18',
+            endDate: '12/7/18',
+            comments: 'about event',
+            maxRegistrants: 1,
+            currentRegs: 0,
+            ID: 'h1245'
+        });
 
         Account.findOne({ username: 'johndoe@shu.edu' }, function (error, account) {
             account.addEvent(event);
