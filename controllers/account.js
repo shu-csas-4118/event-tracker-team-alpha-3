@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const mongoose = require('mongoose');
+const passport = require('passport');
 const Account = require('../models/account');
 
 router.get('/login', function (req, res) {
@@ -8,49 +8,44 @@ router.get('/login', function (req, res) {
 });
 
 router.post('/login', function (req, res, next) {
-    console.log('Login form submitted');
-    const user_mail = req.body.username;
-    Account.findOne({ username: user_mail}, function (error, account) {
+    passport.authenticate('local', function (error, account, info) {
         if (error)
-            console.log('error: ' + error.message);
-        if (account) {
-            const acct = account.login(user_mail, req.body.password, next);
-            if (acct === "Invalid-password") {
-                res.render('login', { error: 'Invalid username or password' })
-            }
-            else
+            return next(error);
+        if (info)
+            return res.render('login', { error: info.message });
+        req.logIn(account, function (error) {
+            if (error)
+                return next(error);
+            else {
+                req.session.acct = account;
                 res.redirect('/');
-        }
-        else {
-            res.render('login', { error: 'No account with that username.' })
-        }
-    });
-
+            }
+        });
+    })(req, res, next);
 });
 
 router.get('/register', function (req, res) {
     res.render('register', { title: 'Register to Event Tracker System' });
 });
 
+//This is used when a registration form is posted to the server.  An account is registered
+//to the database and the user is redirected to the home page.  If the given username is
+//already in the database, redirects to the register page again with an error message.
 router.post('/register', function (req, res, next) {
 
-    const account = new Account({
+    Account.register(new Account({
         username: req.body.user_mail,
         password: req.body.user_password,
         first: req.body.user_firstname,
         last: req.body.user_lastname,
         admin: false,
         address: req.body.user_address
+    }), req.body.user_password, function (error, account) {
+        if (error) {
+            return res.render('register', { error: "Oops! That username already exists.  Try again." });
+        }
+        passport.authenticate('local', res.redirect('/'));
     });
-
-    account.save(function (error) {
-        if (error)
-            console.log('error: ' + error.message);
-        else
-            console.log("Account saved successfully.");
-    });
-
-    res.redirect('/');
 });
 
 module.exports = router;

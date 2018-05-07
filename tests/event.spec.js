@@ -1,6 +1,5 @@
 'use strict';
 
-const parser = require('parse-address');
 const chai = require('chai');
 const mongoose = require('mongoose');
 const assert = chai.assert;
@@ -146,21 +145,21 @@ describe('Event module', function () {
         Event.findOne({ name: 'Event Name' }, function (error, event) {
             event.addRegistrant(account);
             expect(event.registrants[0]).to.eql(account);
-            
+
         });
 
         Event.findOne({ name: 'Event Name'}, function (error, event) {
             event.addRegistrant(account);
             expect(event.currentRegs).to.eql(1);
-            
+
         });
 
-        
+
         Event.findOne({ name: 'Event Name' }, function (error, event) {
             event.addRegistrant(account);
             event.addRegistrant(account1);
             expect(event.addRegistrant(account1)).to.eql("Event-full");
-            
+
         });
 
         Event.findOne({ name: 'Event Name' }, function (error, event) {
@@ -168,7 +167,7 @@ describe('Event module', function () {
             expect(event.addRegistrant(account)).to.eql("Already-registered");
             done();
         });
-        
+
     });
           
     afterEach(function (done) {

@@ -15,31 +15,53 @@ const passportLocalMongoose = require('passport-local-mongoose');
 */
 
 const accountSchema = new Schema({
-        username: String,
-        password: String,
-        first: String,
-        last: String,
-        address: String,
-        admin: Boolean,
-        events: Array
+        username: {
+            type: String,
+            required: true
+        },
+        password: {
+            type: String,
+            required: true
+        },
+        first: {
+            type: String,
+            required: false
+        },
+        last: {
+            type: String,
+            required: false
+        },
+        address: {
+            type: String,
+            required: false
+        },
+        admin: {
+            type: Boolean,
+            required: true
+        },
+        events: {
+            type: Array,
+            required: true
+        }
     }
 );
 
 accountSchema.plugin(passportLocalMongoose);
 
-accountSchema.methods.login = function(username, password, callback) {
-    if (this) {
-        if (this.password === password)
-            return this;
-        else {
-            return "Invalid-password";
-        }
+//login: String String -> Account or String
+//Purpose: Logs the account into the server if the password given mathes the
+//         password on the database, and returns an invalid-password message if not.
+accountSchema.methods.login = function(username, password) {
+    if (this.password === password)
+        return this;
+    else {
+        return "Invalid-password";
     }
-    else
-        return "No-account";
 };
 
-
+//addEvent: event -> void
+//Purpose: Adds the given event to the account's array of events if the event is
+//         not already in that array.
 accountSchema.methods.addEvent = function (event) {
     if (!this.events.includes(event))
         this.events.push(event);

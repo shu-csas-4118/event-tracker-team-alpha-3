@@ -1,3 +1,4 @@
+//A list of the required libraries:
 const express = require('express');
 const path = require('path');
 const favicon = require('serve-favicon');
@@ -8,15 +9,19 @@ const mongoose = require('mongoose');
 const passport = require('passport');
 const LocalStrategy = require('passport-local').Strategy;
 const session = require('express-session');
+
+//Account is required here to make use of passport authentication.
 const Account = require('./models/account');
 
+//Server controllers
 const index = require('./controllers/index');
 const account = require('./controllers/account');
 const event = require('./controllers/event');
 
+//Server application is started here
 const app = express();
 
-// view engine setup
+//View Engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'hbs');
 
@@ -30,7 +35,7 @@ app.use(session({
     secret: 'secret',
     resave: false,
     saveUninitialized: true,
-    cookie: {secure: true }
+    cookie: {secure: true},
 }));
 app.use(passport.initialize());
 app.use(passport.session());
@@ -40,13 +45,14 @@ app.use('/', index);
 app.use('/account', account);
 app.use('/event', event);
 
-passport.use(new LocalStrategy(Account.authenticate()));
+passport.use('local', new LocalStrategy(Account.authenticate()));
 passport.serializeUser(Account.serializeUser());
 passport.deserializeUser(Account.deserializeUser());
 
+//Here is the connection to the MongoDB.
 mongoose.connect('mongodb://localhost:27017/eventtrack');
 
-// catch 404 and forward to error handler
+//Catch 404 and forward to error handler
 app.use(function(req, res, next) 
 {
     const err = new Error('Not Found');
@@ -54,7 +60,7 @@ app.use(function(req, res, next)
     next(err);
 });
 
-// error handler
+//Error handler
 app.use(function(err, req, res, next) 
 {
   // set locals, only providing error in development
@@ -66,6 +72,7 @@ app.use(function(err, req, res, next)
   res.render('error');
 });
 
+//Here the server listens on the port 8081 for user requests.
 const server = app.listen(8081, function () {
     console.log('Listening on port 8081');
 });
