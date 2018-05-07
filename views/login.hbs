@@ -1,25 +1,39 @@
-<h1> Login </h1>
-<h3>{{error}}</h3>
-<div id="login-form">
-    <form action="/account/login" method="post">
-        <div>
-            <label class="label" for="username"> Username </label>
-            <input type="email" id="username" name="username">
-        </div>
-        <div>
-            <label for="password"> Password </label>
-            <input type="password" id="password" name="password">
-        </div>
+<html>
 
-        <div>
-            <button type="submit" id="submit" value="Login"
-                    onclick="return validateForm();"> Login </button>
-        </div>
-    </form>
-</div>
+<head>
+    <h1> Login </h1>
+    <h3>{{error}}</h3>
 
-<p> Don't have an account yet? Register <a href="/account/register"> here </a></p>
+    <div class="navbar" name="topnavbar">
 
+    </div>
+</head>
+<style>
+</style>
+
+<body>
+    <div id="login-form">
+        <form action="/account/login" method="post">
+            <div>
+                <label class="label" for="username"> Username </label>
+                <input type="email" id="username" name="username">
+            </div>
+            <div>
+                <label for="password"> Password </label>
+                <input type="password" id="password" name="password">
+            </div>
+
+            <div>
+                <button type="submit" id="submit" value="Login" onclick="return validateForm();"> Login </button>
+            </div>
+        </form>
+    </div>
+
+    <p> Don't have an account yet? Register
+        <a href="/account/register"> here </a>
+    </p>
+
+</body>
 <script lang="Javascript">
     function validateForm() {
         const email = document.getElementById("username");
@@ -39,3 +53,5 @@
         return true;
     }
 </script>
+
+</html>

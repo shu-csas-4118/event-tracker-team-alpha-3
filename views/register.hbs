@@ -1,38 +1,46 @@
-<h1> Register </h1>
-<span id="welcome-text">Welcome to the Event Tracker System</span>
-<br/>
-<h3>{{error}}</h3>
-<div id="register-form">
-    <form action="/account/register" method="post">
-        <div>
-            <input type="email" id="mail" name="user_mail" placeholder="e-mail">
-        </div>
-        <br>
-        <div>
-            <input type="password" id="password" name="user_password" placeholder="password">
-        </div>
+<html>
 
-        <div>
-            <input type="password" id="reenter-password" name="user_repassword" placeholder="re-enter password">
-        </div>
+<head>
+    <h1> Register </h1>
+    <span id="welcome-text">Welcome to the Event Tracker System</span>
+    <br/>
+    <h3>{{error}}</h3>
+    <div class="navbar" name="topnavbar">
+        <a href="/account/login">Login</a>
+    </div>
+</head>
 
-        <div>
-            <input type="text" id="firstname" name="user_firstname" placeholder="first name">
-        </div>
-        <div>
-            <input type="text" id="lastname" name="user_lastname" placeholder="last name">
-        </div>
-        <div>
-            <input type="text" id="address" name="user_address" placeholder="address">
-        </div>
+<body>
+    <div id="register-form">
+        <form action="/account/register" method="post">
+            <div>
+                <input type="email" id="mail" name="user_mail" placeholder="e-mail">
+            </div>
+            <br>
+            <div>
+                <input type="password" id="password" name="user_password" placeholder="password">
+            </div>
 
-        <div>
-            <input type="submit" id="submit" value="Register"
-                   onclick="return validateRegistration();">
-        </div>
-    </form>
-</div>
+            <div>
+                <input type="password" id="reenter-password" name="user_repassword" placeholder="re-enter password">
+            </div>
 
+            <div>
+                <input type="text" id="firstname" name="user_firstname" placeholder="first name">
+            </div>
+            <div>
+                <input type="text" id="lastname" name="user_lastname" placeholder="last name">
+            </div>
+            <div>
+                <input type="text" id="address" name="user_address" placeholder="address">
+            </div>
+
+            <div>
+                <input type="submit" id="submit" value="Register" onclick="return validateRegistration();">
+            </div>
+        </form>
+    </div>
+</body>
 <script lang="Javascript">
     function validateRegistration() {
         const email = document.getElementById("mail");
@@ -60,3 +68,5 @@
         return true;
     }
 </script>
+
+</html>
