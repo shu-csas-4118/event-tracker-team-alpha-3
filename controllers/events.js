@@ -4,11 +4,11 @@ const mongoose = require('mongoose');
 const Event = require('../models/event');
 
 router.get('/event', function (req, res) {
-    res.render('event', { title: 'Event page' });
+    res.render('event', { title: 'Events page' });
 });
 
-router.get('/event', function (req, res){
-
+router.get('/event', function (req, res) {
+    
 });
 
 module.exports = router;
