@@ -31,12 +31,11 @@ app.set('view engine', 'hbs');
 app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
-app.use(cookieParser());
+app.use(cookieParser('secret'));
 app.use(session({
     secret: 'secret',
-    resave: false,
+    resave: true,
     saveUninitialized: true,
-    cookie: {secure: true},
 }));
 app.use(passport.initialize());
 app.use(passport.session());
@@ -46,7 +45,7 @@ app.use('/', index);
 app.use('/account', account);
 app.use('/event', event);
 
-passport.use('local', new LocalStrategy(Account.authenticate()));
+passport.use(new LocalStrategy(Account.authenticate()));
 passport.serializeUser(Account.serializeUser());
 passport.deserializeUser(Account.deserializeUser());
 

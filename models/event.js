@@ -32,10 +32,10 @@ const eventSchema = new Schema(
 eventSchema.methods.addRegistrant = function (account) {
     if (this.currentRegs >= this.maxRegistrants)
         return "Event-full";
-    else if (this.registrants.includes(account))
+    else if (this.registrants.includes(account._id))
         return "Already-registered";
     else {
-        this.registrants.push(account);
+        this.registrants.push(account._id);
         this.currentRegs++;
         return "Account-added";
     }

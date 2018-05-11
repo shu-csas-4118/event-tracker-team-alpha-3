@@ -41,20 +41,6 @@ describe('Account module', function () {
         });
     });
 
-    it('should have a function to get the password.', function (done) {
-        Account.findOne({ username: 'johndoe@shu.edu' }, function (error, account) {
-            expect(account.password).to.eql('password');
-            done();
-        })
-    });
-
-    it('should have a function to login an account.', function (done) {
-        Account.findOne({ username: 'johndoe@shu.edu' }, function (error, account) {
-            expect(account.login('johndoe@shu.edu', 'password', {})).to.eql(account);
-            done();
-        })
-    });
-
     it('should have a function to add a first name.', function (done) {
         Account.findOne({username: 'johndoe@shu.edu'}, function (error, account) {
             account.first = "John";
@@ -90,13 +76,12 @@ describe('Account module', function () {
             endDate: '12/7/18',
             comments: 'about event',
             maxRegistrants: 1,
-            currentRegs: 0,
-            ID: 'h1245'
+            currentRegs: 0
         });
 
         Account.findOne({ username: 'johndoe@shu.edu' }, function (error, account) {
             account.addEvent(event);
-            expect(account.events[0]).to.eql(event);
+            expect(account.events[0]).to.eql(event._id);
         });
 
         Account.findOne({ username: 'johndoe@shu.edu' }, function (error, account) {

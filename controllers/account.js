@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const passport = require('passport');
 const Account = require('../models/account');
+const bcrypt = require('bcrypt');
 
 router.get('/login', function (req, res) {
     res.render('login', { title: 'Login to Event Tracker System' });
@@ -13,14 +14,14 @@ router.post('/login', function (req, res, next) {
             return next(error);
         if (info)
             return res.render('login', { error: info.message });
-        req.logIn(account, function (error) {
-            if (error)
-                return next(error);
-            else {
-                req.session.acct = account;
-                res.redirect('/');
-            }
-        });
+        else {
+            req.login(account, function (error) {
+                if (error)
+                    return next(error);
+                else
+                    return res.redirect('/');
+            });
+        }
     })(req, res, next);
 });
 
@@ -35,7 +36,7 @@ router.post('/register', function (req, res, next) {
 
     Account.register(new Account({
         username: req.body.user_mail,
-        password: req.body.user_password,
+        //password: req.body.user_password,
         first: req.body.user_firstname,
         last: req.body.user_lastname,
         admin: false,
@@ -46,6 +47,10 @@ router.post('/register', function (req, res, next) {
         }
         passport.authenticate('local', res.redirect('/'));
     });
+});
+
+router.get('/profile', function (req, res, next) {
+    res.render('profile', { account: req.user });
 });
 
 module.exports = router;

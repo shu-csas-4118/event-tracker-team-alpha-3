@@ -61,9 +61,6 @@ describe('Event module', function () {
         })
     });
 
-
-    
-
     it('should have a function to get the name.', function (done) {
         Event.findOne({ name: 'Event Name' }, function (error, event) {
             expect(event.name).to.eql('Event Name');
@@ -132,26 +129,24 @@ describe('Event module', function () {
 
         const account = new Account({
             username: 'johndoe@shu.edu',
-            password: 'password',
-            admin: false
+            admin: false,
+            events: []
         });
 
         const account1 = new Account({
             username: 'doejohn@shu.edu',
-            password: 'password',
-            admin: false
+            admin: false,
+            events: []
         });
 
         Event.findOne({ name: 'Event Name' }, function (error, event) {
             event.addRegistrant(account);
-            expect(event.registrants[0]).to.eql(account);
-
+            expect(event.registrants[0]).to.eql(account._id);
         });
 
         Event.findOne({ name: 'Event Name'}, function (error, event) {
             event.addRegistrant(account);
             expect(event.currentRegs).to.eql(1);
-
         });
 
 
@@ -159,7 +154,6 @@ describe('Event module', function () {
             event.addRegistrant(account);
             event.addRegistrant(account1);
             expect(event.addRegistrant(account1)).to.eql("Event-full");
-
         });
 
         Event.findOne({ name: 'Event Name' }, function (error, event) {
