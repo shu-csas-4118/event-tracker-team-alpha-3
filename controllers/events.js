@@ -18,8 +18,26 @@ router.get('/', function (req, res, next) {
     acct = acct + 'login';
     acct_link = 'Login';
   }
-  res.render('events', { title: 'Alpha Labs: Events', account: acct,
-  account_link: acct_link });
+  res.render('events', {
+    title: 'Alpha Labs: Events', account: acct,
+    account_link: acct_link
+  });
+});
+
+router.get('/eventcreation', function (req, res, next) {
+  var acct = '/account/';
+  var acct_link;
+  if (req.user) {
+    acct = acct + 'profile';
+    acct_link = 'Profile';
+  } else {
+    acct = acct + 'login';
+    acct_link = 'Login';
+  }
+  res.render('eventcreation', {
+    title: 'Alpha Labs: Event Creation', account: acct,
+    account_link: acct_link
+  });
 });
 
 /*
@@ -29,8 +47,26 @@ router.get('/', function (req, res, next) {
     on, which is the id of the event.  It then redirects the user to the
     page for that event.
 */
-router.post('/:e', function(req, res, next) {
+
+router.post('/:e', function (req, res, next) {
   res.redirect('/event/:e');
+});
+
+router.post('/eventcreation', function (req, res, next) {
+  Event.create(new Event
+    ({
+      name: req.body.event_name,
+      email: req.body.event_email,
+      supervisor: req.body.event_supervisor,
+      address: req.body.event_address,
+      startDate: req.body.event_start,
+      endDate: req.body.event_end,
+      comments: req.body.event_comments,
+      registrants: [],
+      maxRegistrants: req.body.event_max,
+      currentRegs: 0,
+    }));
+res.redirect('/events/events');
 });
 
 module.exports = router;

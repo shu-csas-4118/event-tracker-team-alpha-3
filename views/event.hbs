@@ -1,52 +1,92 @@
 <html>
+<nav class="navbar navbar-expand-sm">
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse" id="collapsibleNavbar">
+    <ul class="navbar-nav">
+      <li class="nav-item">
+        <a class="nav-link" href='/'>Home</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href={{account}}>{{account_link}}</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/events">Events</a>
+      </li>
+    </ul>
+  </div>
+</nav>
 
-  <nav class="navbar navbar-expand-sm">
-    <button class="navbar-toggler" type="button" data-toggle="collapse"
-     data-target="#collapsibleNavbar">
-     <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse" id="collapsibleNavbar">
-      <ul class="navbar-nav">
-        <li class="nav-item">
-          <a class="nav-link" href='/'>Home</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href={{account}}>{{account_link}}</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="/events">Events</a>
-        </li>
-      </ul>
-    </div>
-  </nav>
+<head>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <script src="https://www.paypalobjects.com/api/checkout.js"></script>
+</head>
 
-  <body>
+<body>
 
-      <p> Event </p>
+  <p> Event </p>
 
-      <p id="name"></p>
-      <p id="email"></p>
-      <p id="supervisor"></p>
-      <p id="address"></p>
-      <p id="startDate"></p>
-      <p id="endDate"></p>
-      <p id="comments"></p>
+  <p id="name"></p>
+  <p id="email"></p>
+  <p id="supervisor"></p>
+  <p id="address"></p>
+  <p id="startDate"></p>
+  <p id="endDate"></p>
+  <p id="comments"></p>
+
+  <div id="paypal-button"></div>
+
+  <script lang="Javascript">
+    document.getElementById("name").innerHTML = "placeholder"
+    document.getElementById("email").innerHTML = "placeholder"
+    document.getElementById("supervisor").innerHTML = "placeholder"
+    document.getElementById("address").innerHTML = "placeholder"
+    document.getElementById("startDate").innerHTML = "placeholder"
+    document.getElementById("endDate").innerHTML = "placeholder"
+    document.getElementById("comments").innerHTML = "placeholder"
+
+    paypal.Button.render({
+      env: 'production', // Or 'sandbox',
+
+      commit: true, // Show a 'Pay Now' button
+
+      style: {
+        color: 'gold',
+        size: 'small'
+      },
+
+      payment: function (data, actions) {
+        /* 
+         * Set up the payment here 
+         */
+      },
+
+      onAuthorize: function (data, actions) {
+        /* 
+         * Execute the payment here 
+         */
+      },
+
+      onCancel: function (data, actions) {
+        /* 
+         * Buyer cancelled the payment 
+         */
+      },
+
+      onError: function (err) {
+        /* 
+         * An error occurred during the transaction 
+         */
+      }
+    }, '#paypal-button');
+  </script>
 
 
-      <script lang="Javascript">
-          document.getElementById("name").innerHTML = "placeholder"
-          document.getElementById("email").innerHTML = "placeholder"
-          document.getElementById("supervisor").innerHTML = "placeholder"
-          document.getElementById("address").innerHTML = "placeholder"
-          document.getElementById("startDate").innerHTML = "placeholder"
-          document.getElementById("endDate").innerHTML = "placeholder"
-          document.getElementById("comments").innerHTML = "placeholder"
-      </script>
 
 
 
-
-
-  </body>
+</body>
 
 </html>

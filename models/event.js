@@ -41,6 +41,7 @@ eventSchema.methods.addRegistrant = function (account) {
     }
 };
 
+
 const Event = mongoose.model('Event', eventSchema);
 
 module.exports = Event;
