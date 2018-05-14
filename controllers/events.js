@@ -18,10 +18,17 @@ router.get('/', function (req, res, next) {
     acct = acct + 'login';
     acct_link = 'Login';
   }
-  res.render('events', {
-    title: 'Alpha Labs: Events', account: acct,
-    account_link: acct_link
-  });
+  Event.find({}, 'name startDate endDate', function (err, events) {
+    if (err) {
+      console.log(err);
+    } else {
+      res.render('events', {
+        title: 'Alpha Labs: Events', account: acct,
+        account_link: acct_link, events: events
+      });
+    }
+  })
+
 });
 
 router.get('/eventcreation', function (req, res, next) {
@@ -63,7 +70,9 @@ router.post('/eventcreation', function (req, res, next) {
       maxRegistrants: req.body.event_max,
       currentRegs: 0,
     }));
-res.redirect('/events/eventcreation');
+  res.redirect('/events/eventcreation');
 });
+
+
 
 module.exports = router;
