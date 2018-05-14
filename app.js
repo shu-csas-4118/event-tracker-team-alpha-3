@@ -18,6 +18,7 @@ const Account = require('./models/account');
 const index = require('./controllers/index');
 const account = require('./controllers/account');
 const event = require('./controllers/event');
+const events = require('./controllers/events');
 
 //Server application is started here
 const app = express();
@@ -44,6 +45,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/', index);
 app.use('/account', account);
 app.use('/event', event);
+app.use('/events', events);
 
 passport.use(new LocalStrategy(Account.authenticate()));
 passport.serializeUser(Account.serializeUser());
@@ -53,7 +55,7 @@ passport.deserializeUser(Account.deserializeUser());
 mongoose.connect('mongodb://localhost:27017/eventtrack');
 
 //Catch 404 and forward to error handler
-app.use(function(req, res, next) 
+app.use(function(req, res, next)
 {
     const err = new Error('Not Found');
     err.status = 404;
@@ -61,7 +63,7 @@ app.use(function(req, res, next)
 });
 
 //Error handler
-app.use(function(err, req, res, next) 
+app.use(function(err, req, res, next)
 {
   // set locals, only providing error in development
   res.locals.message = err.message;

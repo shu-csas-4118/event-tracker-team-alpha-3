@@ -1,57 +1,40 @@
-<html>
+<html lang="en">
 
-<head>
-    <h1> Login </h1>
-    <h3>{{error}}</h3>
-
-    <div class="navbar" name="topnavbar">
-        <a href="/">Home</a>
+  <nav class="navbar navbar-expand-sm">
+    <button class="navbar-toggler" type="button" data-toggle="collapse"
+    data-target="#collapsibleNavbar">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="collapsibleNavbar">
+      <ul class="navbar-nav">
+        <li class="nav-item">
+          <a class="nav-link" href='/'>Home</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/events">Events</a>
+        </li>
+      </ul>
     </div>
-</head>
-<style>
-</style>
+  </nav>
 
-<body>
-    <div id="login-form">
-        <form action="/account/login" method="post">
-            <div>
-                <label class="label" for="username"> Username </label>
-                <input type="email" id="username" name="username">
-            </div>
-            <div>
-                <label for="password"> Password </label>
-                <input type="password" id="password" name="password">
-            </div>
-
-            <div>
-                <button type="submit" id="submit" value="Login" onclick="return validateForm();"> Login </button>
-            </div>
-        </form>
-    </div>
-
-    <p> Don't have an account yet? Register
-        <a href="/account/register"> here </a>
-    </p>
-
-</body>
-<script lang="Javascript">
-    function validateForm() {
-        const email = document.getElementById("username");
-        const password = document.getElementById("password");
-
-        if (email.value === "") {
-            alert("Please enter an email.");
-            return false;
-        }
-        if (password.value === "") {
-            alert("Please enter a password.");
-            return false;
-        }
-
-        const myform = document.getElementById("login-form");
-        myform.submit();
-        return true;
-    }
-</script>
+  <body class="text-center" data-gr-c-s-loaded="true">
+    <form class="form-signin" action="/account/login" method="post" >
+      <h3>Please sign in</h3>
+      <h5>{{error}}</h5>
+      <div class="form-label-group">
+        <label for="email">email</label>
+        <input type="email" id="username" class="form-control" name="username"
+        placeholder="email" required>
+      </div>
+      <div class="form-label-group">
+        <label for="password">password</label>
+        <input type="password" id="password" class="form-control" name="password"
+         placeholder="password" required>
+      </div>
+      <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in
+      </button>
+    </form>
+    <a href="/account/register">Register</a>
+  </body>
 
 </html>

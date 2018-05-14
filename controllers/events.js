@@ -3,12 +3,34 @@ const router = express.Router();
 const mongoose = require('mongoose');
 const Event = require('../models/event');
 
-router.get('/event', function (req, res) {
-    res.render('event', { title: 'Events page' });
+/*
+  Home for events:
+    This directs to the main page for the listing of the events.  It
+    renders the events page.
+*/
+router.get('/', function (req, res, next) {
+  var acct = '/account/';
+  var acct_link;
+  if (req.user) {
+    acct = acct + 'profile';
+    acct_link = 'Profile';
+  } else {
+    acct = acct + 'login';
+    acct_link = 'Login';
+  }
+  res.render('events', { title: 'Alpha Labs: Events', account: acct,
+  account_link: acct_link });
 });
 
-router.get('/event', function (req, res) {
-    
+/*
+  Event render for events.
+    This post method is used when a user clicks on one of the events on the
+    events page.  It takes as input a paramter for which event the user clicked
+    on, which is the id of the event.  It then redirects the user to the
+    page for that event.
+*/
+router.post('/:e', function(req, res, next) {
+  res.redirect('/event/:e');
 });
 
 module.exports = router;
