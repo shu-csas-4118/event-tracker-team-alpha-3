@@ -48,9 +48,6 @@ router.get('/eventcreation', function (req, res, next) {
     page for that event.
 */
 
-router.post('/:e', function (req, res, next) {
-  res.redirect('/event/:e');
-});
 
 router.post('/eventcreation', function (req, res, next) {
   Event.create(new Event
@@ -66,7 +63,7 @@ router.post('/eventcreation', function (req, res, next) {
       maxRegistrants: req.body.event_max,
       currentRegs: 0,
     }));
-res.redirect('/events/events');
+res.redirect('/events/eventcreation');
 });
 
 module.exports = router;
