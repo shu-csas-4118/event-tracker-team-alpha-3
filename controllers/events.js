@@ -60,10 +60,11 @@ router.post('/search', function (req, res, next) {
         e_starts.push(events[i].startDate);
         e_ends.push(events[i].endDate);
       }
+      console.log(e_links);
+      console.log(e_names);
       res.render('events', {
-        title: 'Alpha Labs: Events', account: acct,
-        account_link: acct_link, links: e_links,
-        names: e_names, starts: e_starts, ends: e_ends
+        title: 'Alpha Labs: Events', links: ['/', acct], link_names: ['Home', acct_link],
+        elinks: e_links, names: e_names, starts: e_starts, ends: e_ends
       });
     }
   })
