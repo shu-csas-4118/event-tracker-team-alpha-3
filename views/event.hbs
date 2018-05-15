@@ -26,17 +26,62 @@
 
 <body>
 
-  <div>{{e.name}}</div>
-  <div>{{e.email}}</div>
-  <div>{{e.supervisor}}</div>
-  <div>{{e.address}}</div>
-  <div>{{e.startDate}}</div>
-  <div>{{e.endDate}}</div>
-  <div>{{e.comments}}</div>
-  <div>{{e.maxRegistrants}}</div>
-  <div>{{e.currentRegs}}</div>
+  
+  <div><bold><center><font size="+5"><ins>{{e.name}}</ins></font></center></bold></div>
+  <div><center><font size="+2">Email: {{e.email}}</font></center></div>
+  <div><center><font size="+2">Supervisor: {{e.supervisor}}</font></center></div>
+  <div><center><font size="+2">The Address: {{e.address}}</font></center></div>
+  <div><center><font size="+2">Event starts on {{e.startDate}}</font></center></div>
+  <div><center><font size="+2">Event starts ends {{e.endDate}}</font></center></div>
+   <div><center><font size="+2">Compensity: {{e.currentRegs}}/{{e.maxRegistrants}}</font></center></div>
+  <div><center><font size="+3"><ins>Event Info</ins></font></center></div>
+  <div><center><font size="+2">{{e.comments}}</font></center></div><br><br>
+ 
 
-  <div id="paypal-button"></div>
+  <div>
+    <center>
+      <button id="button" class="btn btn-info  btn-lg" data-toggle="collapse" data-target="#Redistration">Register</button>
+    </center>
+    <div id="Redistration" class="collapse collapse in">   
+      <br>
+      <body class="text-center" data-gr-c-s-loaded="true">
+    <form class="form-signin" action="/event/{{e._id}}/register" method="post">
+      <h3>Register for Event here</h3>
+      <h5>{{error}}</h5>
+        <div class="form-label-group">
+          <label for="user_mail">email</label>
+          <input class="form-control" type="email" id="mail" name="user_mail" 
+           placeholder= "{{user.username}}"
+            required>
+        </div>        
+        <div class="form-label-group">
+          <label for="user_firstname">first name</label>
+          <input type="text" id="firstname" name="user_firstname"
+          class="form-control" placeholder="{{user.first}}">
+        </div>
+        <div class="form-label-group">
+          <label for="user_lastname">last name</label>
+          <input type="text" id="lastname" name="user_lastname"
+          class="form-control" placeholder="{{user.last}}">
+        </div>
+        <div class="form-label-group">
+          <label for="user_address">address</label>
+          <input type="text" id="address" name="user_address"
+           class="form-control" placeholder="{{user.address}}">
+        </div>
+         <center><div id="paypal-button"></div></center>
+        <!--<button  class="btn btn-lg btn-primary btn-block" type="submit"
+          id="submit" value="Register">
+          Register
+        </button>-->
+      </form>  
+      <br><br>
+     
+      <br><br>
+    </div> 
+    
+  </div>  
+  
 
   <script lang="Javascript">
     
