@@ -1,45 +1,46 @@
 <html lang="en">
 
-  <nav class="navbar navbar-expand-sm">
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse" id="collapsibleNavbar">
-      <ul class="navbar-nav">
-        <li class="nav-item">
-          <a class="nav-link" href='/'>Home</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href={{account}}>{{account_link}}</a>
-        </li>
-      </ul>
-    </div>
-  </nav>
+<nav class="navbar navbar-expand-sm">
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse" id="collapsibleNavbar">
+    <ul class="navbar-nav">
+      <li class="nav-item">
+        <a class="nav-link" href='/'>Home</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href={{account}}>{{account_link}}</a>
+      </li>
+    </ul>
+  </div>
+</nav>
 
 <body>
 
   <div>
-    <p>Events:</p>
+    <p></p>
     <script>
-    function printEvents() {
-      e_names = '{{names}}';
-      e_links = '{{links}}';
-      e_starts = '{{starts}}';
-      e_ends = '{{ends}}';
-      if (e_names === '')
-        document.write('<div class="event-proto">' + "<h6> No events </h6>" + "</div>");
-      else {
-        e_names = e_names.split(',');
-        e_links = e_links.split(',');
-        e_starts = e_starts.split(',');
-        e_ends = e_ends.split(',');
-        for (var i = 0; i < e_names.length; i++) {
-          document.write('<a class="btn btn-lg btn-primary btn-block" href="/event/' +
-            e_links[i] + '">' + e_names[i] + '</a>');
+      function printEvents() {
+        e_names = '{{names}}';
+        e_links = '{{links}}';
+        e_starts = '{{starts}}';
+        e_ends = '{{ends}}';
+        if (e_names === '')
+          document.write('<div class="event-proto">' + "<h6> No events </h6>" + "</div>");
+        else {
+          e_names = e_names.split(',');
+          e_links = e_links.split(',');
+          e_starts = e_starts.split(',');
+
+          e_ends = e_ends.split(',');
+          for (var i = 0; i < e_names.length; i++) {
+            document.write('<div class="event_button"><a class="btn btn-lg btn-primary btn-block" href="/event/' +
+              e_links[i] + '">' + e_names[i] + '</a>' + "Start Date: " + e_starts[i].substring(0, 16) + "\n" + "End Date: " + e_ends[i].substring(0, 16) + '</div>');
+          }
         }
       }
-    }
-    printEvents();</script>
+      printEvents();</script>
     <a class="button" href='/events/eventcreation'>Create Event</a>
   </div>
 </body>
