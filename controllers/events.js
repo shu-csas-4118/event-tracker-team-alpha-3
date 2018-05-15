@@ -22,13 +22,20 @@ router.get('/', function (req, res, next) {
     if (err) {
       console.log(err);
     } else {
+      let e_links = [], e_names = [], e_starts = [], e_ends = [];
+      for (var i = 0; i < events.length; i++) {
+        e_links.push(events[i]._id);
+        e_names.push(events[i].name);
+        e_starts.push(events[i].startDate);
+        e_ends.push(events[i].endDate);
+      }
       res.render('events', {
         title: 'Alpha Labs: Events', account: acct,
-        account_link: acct_link, events: events
+        account_link: acct_link, links: e_links,
+        names: e_names, starts: e_starts, ends: e_ends
       });
     }
   })
-
 });
 
 router.get('/eventcreation', function (req, res, next) {
@@ -55,7 +62,6 @@ router.get('/eventcreation', function (req, res, next) {
     page for that event.
 */
 
-
 router.post('/eventcreation', function (req, res, next) {
   Event.create(new Event
     ({
@@ -70,7 +76,7 @@ router.post('/eventcreation', function (req, res, next) {
       maxRegistrants: req.body.event_max,
       currentRegs: 0,
     }));
-  res.redirect('/events/eventcreation');
+  res.redirect('/events');
 });
 
 

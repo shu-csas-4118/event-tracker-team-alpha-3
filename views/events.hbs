@@ -15,21 +15,27 @@
       </ul>
     </div>
   </nav>
+
 <body>
 
   <div>
     <p>Events:</p>
-    <script>    function printEvents() {
-      event_names = '{{events}}';
-      console.log(event_names);
-      if (event_names === '')
+    <script>
+    function printEvents() {
+      e_names = '{{names}}';
+      e_links = '{{links}}';
+      e_starts = '{{starts}}';
+      e_ends = '{{ends}}';
+      if (e_names === '')
         document.write('<div class="event-proto">' + "<h6> No events </h6>" + "</div>");
       else {
-        event_names = events.split(',');
-
-        for (var i = 0; i < event_names.length; i++) {
+        e_names = e_names.split(',');
+        e_links = e_links.split(',');
+        e_starts = e_starts.split(',');
+        e_ends = e_ends.split(',');
+        for (var i = 0; i < e_names.length; i++) {
           document.write('<a class="btn btn-lg btn-primary btn-block" href="/event/' +
-            event_names[i] + '">' + event_names[i] + '</a>');
+            e_links[i] + '">' + e_names[i] + '</a>');
         }
       }
     }
