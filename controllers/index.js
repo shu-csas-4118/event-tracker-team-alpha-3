@@ -10,10 +10,10 @@ const router = express.Router();
 router.get('/', function(req, res, next) {
     if (req.user)
         res.render('index', { title: 'Alpha Labs',
-        account: '/account/profile', account_link: 'Profile' });
+        links:['/account/profile', '/events'], link_names: ['Profile', 'Events'] });
     else
         res.render('index', { title: 'Alpha Labs',
-        account: '/account/login', account_link: 'Login' });
+        links:['/account/login', '/events'], link_names: ['Login', 'Events'] });
 
 });
 
