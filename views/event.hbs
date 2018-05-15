@@ -26,26 +26,20 @@
 
 <body>
 
-  <p> Event </p>
-
-  <p id="name"></p>
-  <p id="email"></p>
-  <p id="supervisor"></p>
-  <p id="address"></p>
-  <p id="startDate"></p>
-  <p id="endDate"></p>
-  <p id="comments"></p>
+  <div>{{e.name}}</div>
+  <div>{{e.email}}</div>
+  <div>{{e.supervisor}}</div>
+  <div>{{e.address}}</div>
+  <div>{{e.startDate}}</div>
+  <div>{{e.endDate}}</div>
+  <div>{{e.comments}}</div>
+  <div>{{e.maxRegistrants}}</div>
+  <div>{{e.currentRegs}}</div>
 
   <div id="paypal-button"></div>
 
   <script lang="Javascript">
-    document.getElementById("name").innerHTML = "placeholder"
-    document.getElementById("email").innerHTML = "placeholder"
-    document.getElementById("supervisor").innerHTML = "placeholder"
-    document.getElementById("address").innerHTML = "placeholder"
-    document.getElementById("startDate").innerHTML = "placeholder"
-    document.getElementById("endDate").innerHTML = "placeholder"
-    document.getElementById("comments").innerHTML = "placeholder"
+    
 
     paypal.Button.render({
       env: 'production', // Or 'sandbox',
@@ -82,10 +76,6 @@
       }
     }, '#paypal-button');
   </script>
-
-
-
-
 
 </body>
 
