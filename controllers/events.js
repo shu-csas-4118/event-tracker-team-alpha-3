@@ -30,8 +30,8 @@ router.get('/', function (req, res, next) {
         e_ends.push(events[i].endDate);
       }
       res.render('events', {
-        title: 'Alpha Labs: Events', account: acct,
-        account_link: acct_link, links: e_links,
+        title: 'Alpha Labs: Events', links: ['/', acct],
+        link_names: ['Home', acct_link] , elinks: e_links,
         names: e_names, starts: e_starts, ends: e_ends
       });
     }
@@ -49,8 +49,8 @@ router.get('/eventcreation', function (req, res, next) {
     acct_link = 'Login';
   }
   res.render('eventcreation', {
-    title: 'Alpha Labs: Event Creation', account: acct,
-    account_link: acct_link
+    title: 'Alpha Labs: Event Creation',
+    links: ['/', acct], link_names: ['Home', acct_link]
   });
 });
 

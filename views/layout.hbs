@@ -12,6 +12,30 @@
   <link href="/stylesheets/style.css" rel="stylesheet">
 </head>
 
+<nav class="navbar navbar-expand-sm navbar-fixed">
+  <button class="navbar-toggler" type="button" data-toggle="collapse"
+   data-target="#collapsibleNavbar">
+   <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse" id="collapsibleNavbar">
+    <ul class="navbar-nav">
+      <script>
+      function generateLinks() {
+        const links = '{{links}}'.split(',');
+        const link_names = '{{link_names}}'.split(',');
+        console.log(links);
+        console.log(link_names);
+        for (var i = 0; i < links.length; i++) {
+          document.write('<li class="nav-item">' + '<a class="nav-link"' +
+          'href=' + links[i] + '>' + link_names[i] + '</a></li>')
+        }
+      }
+      generateLinks();
+      </script>
+    </ul>
+  </div>
+</nav>
+
 <body>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
