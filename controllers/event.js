@@ -24,7 +24,7 @@ router.get('/:e', function (req, res) {
   }
   Event.findOne({_id: event_id}, function(error, event) {
     res.render('event', { title: 'Alpha Labs: ' + event.name, e: event,
-    account: acct, account_link: acct_link});
+    links: ['/', acct, '/events'], link_names: ['Home', acct_link, 'Events'], user: req.user});
   })
 });
 

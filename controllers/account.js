@@ -12,7 +12,8 @@ const Event = require('../models/event');
 */
 router.get('/login', function (req, res) {
   if (!req.user)
-    res.render('login', { title: 'Alpha Labs: Login' });
+    res.render('login', { title: 'Alpha Labs: Login', links: ['/', '/events'],
+    link_names: ['Home', 'Events']});
   else
     res.redirect('/account/profile');
 });
@@ -29,7 +30,8 @@ router.post('/login', function (req, res, next) {
     if (error)
       return next(error);
     if (info)
-      return res.render('login', { error: info.message });
+      return res.render('login', { error: info.message,
+      links: ['/', '/events'], link_names: ['Home', 'Events'] });
     else {
       req.login(account, function (error) {
           if (error)
@@ -50,7 +52,8 @@ router.get('/register', function (req, res) {
   if (req.user)
     res.redirect('/account/profile');
   else
-    res.render('register', { title: 'register' });
+    res.render('register', { title: 'Alpha Labs: Register',
+    links: ['/', '/events'], link_names: ['Home', 'Events'] });
 });
 
 /*
@@ -75,7 +78,9 @@ router.post('/register', function (req, res, next) {
     }), req.body.user_password, function (error, account) {
         if (error) {
             return res.render('register',
-            { error: "Oops! That username already exists.  Try again." });
+            { error: "Oops! That username already exists.  Try again.",
+             links: ['/', '/account/login', '/events'],
+             link_names: ['Home', 'Login', 'Events']});
         }
         passport.authenticate('local', res.redirect('/'));
     });
@@ -99,10 +104,8 @@ router.get('/profile', function (req, res, next) {
         event_names.push(event.name);
       })
     }
-    console.log(events);
-    console.log(event_names);
     res.render('profile', { title: 'profile', account: req.user,
-      names: event_names});
+      names: event_names, links: ['/', '/events'], link_names: ['Home', 'Events']});
   }
 });
 

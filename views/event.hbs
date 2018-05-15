@@ -1,22 +1,4 @@
-<html>
-<nav class="navbar navbar-expand-sm">
-  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
-    <span class="navbar-toggler-icon"></span>
-  </button>
-  <div class="collapse navbar-collapse" id="collapsibleNavbar">
-    <ul class="navbar-nav">
-      <li class="nav-item">
-        <a class="nav-link" href='/'>Home</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href={{account}}>{{account_link}}</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="/events">Events</a>
-      </li>
-    </ul>
-  </div>
-</nav>
+<html lang="en">
 
 <head>
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
@@ -26,26 +8,65 @@
 
 <body>
 
-  <p> Event </p>
+  
+  <div><bold><center><font size="+5"><ins>{{e.name}}</ins></font></center></bold></div>
+  <div><center><font size="+2">Email: {{e.email}}</font></center></div>
+  <div><center><font size="+2">Supervisor: {{e.supervisor}}</font></center></div>
+  <div><center><font size="+2">The Address: {{e.address}}</font></center></div>
+  <div><center><font size="+2">Event starts on {{e.startDate}}</font></center></div>
+  <div><center><font size="+2">Event starts ends {{e.endDate}}</font></center></div>
+   <div><center><font size="+2">Compensity: {{e.currentRegs}}/{{e.maxRegistrants}}</font></center></div>
+  <div><center><font size="+3"><ins>Event Info</ins></font></center></div>
+  <div><center><font size="+2">{{e.comments}}</font></center></div><br><br>
+ 
 
-  <p id="name"></p>
-  <p id="email"></p>
-  <p id="supervisor"></p>
-  <p id="address"></p>
-  <p id="startDate"></p>
-  <p id="endDate"></p>
-  <p id="comments"></p>
-
-  <div id="paypal-button"></div>
+  <div>
+    <center>
+      <button id="button" class="btn btn-info  btn-lg" data-toggle="collapse" href=".hook" data-target="#Redistration">Register</button>
+    </center>
+    <div id="Redistration" class="collapse hook">   
+      <br>
+      <body class="text-center" data-gr-c-s-loaded="true">
+    <form class="form-signin" action="/event/{{e._id}}/register" method="post">
+      <h3>Register for Event here</h3>
+      <h5>{{error}}</h5>
+        <div class="form-label-group">
+          <label for="user_mail">email</label>
+          <input class="form-control" type="email" id="mail" name="user_mail" 
+           placeholder= "{{user.username}}"
+            required>
+        </div>        
+        <div class="form-label-group">
+          <label for="user_firstname">first name</label>
+          <input type="text" id="firstname" name="user_firstname"
+          class="form-control" placeholder="{{user.first}}">
+        </div>
+        <div class="form-label-group">
+          <label for="user_lastname">last name</label>
+          <input type="text" id="lastname" name="user_lastname"
+          class="form-control" placeholder="{{user.last}}">
+        </div>
+        <div class="form-label-group">
+          <label for="user_address">address</label>
+          <input type="text" id="address" name="user_address"
+           class="form-control" placeholder="{{user.address}}">
+        </div>
+         <center><div id="paypal-button"></div></center>
+        <!--<button  class="btn btn-lg btn-primary btn-block" type="submit"
+          id="submit" value="Register">
+          Register
+        </button>-->
+      </form>  
+      <br><br>
+     
+      <br><br>
+    </div> 
+    
+  </div>  
+  
 
   <script lang="Javascript">
-    document.getElementById("name").innerHTML = "placeholder"
-    document.getElementById("email").innerHTML = "placeholder"
-    document.getElementById("supervisor").innerHTML = "placeholder"
-    document.getElementById("address").innerHTML = "placeholder"
-    document.getElementById("startDate").innerHTML = "placeholder"
-    document.getElementById("endDate").innerHTML = "placeholder"
-    document.getElementById("comments").innerHTML = "placeholder"
+    
 
     paypal.Button.render({
       env: 'production', // Or 'sandbox',
@@ -58,34 +79,30 @@
       },
 
       payment: function (data, actions) {
-        /* 
-         * Set up the payment here 
+        /*
+         * Set up the payment here
          */
       },
 
       onAuthorize: function (data, actions) {
-        /* 
-         * Execute the payment here 
+        /*
+         * Execute the payment here
          */
       },
 
       onCancel: function (data, actions) {
-        /* 
-         * Buyer cancelled the payment 
+        /*
+         * Buyer cancelled the payment
          */
       },
 
       onError: function (err) {
-        /* 
-         * An error occurred during the transaction 
+        /*
+         * An error occurred during the transaction
          */
       }
     }, '#paypal-button');
   </script>
-
-
-
-
 
 </body>
 
