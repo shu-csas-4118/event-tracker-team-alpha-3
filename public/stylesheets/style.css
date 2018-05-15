@@ -56,3 +56,22 @@ body {
 .event-proto {
   padding-left: 2.5%;
 }
+
+.event_button
+{
+  width: 100%;
+  width: 600px;
+  text-align: center;
+  position: relative;
+  margin: auto;
+  
+}
+.event_title
+{
+ text-align: center;
+}
+.btn.btn-lg.btn-primary.btn-block
+{
+  width: inherit;
+  margin: inherit;
+}
