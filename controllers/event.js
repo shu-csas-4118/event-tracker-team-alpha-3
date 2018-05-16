@@ -51,11 +51,13 @@ router.post('/:e/register', function(req, res, next) {
           next(error);
       else {
           Event.findOne({_id: req.params.e}, function(error, event) {
+              console.log('"' + account._id + '"');
+              console.log(event.registrants);
               if (event.currentRegs >= event.maxRegistrants)
-                  res.render('event', {title: 'Alpha Labs' + event.name,
+                  res.render('event', {title: 'Alpha Labs' + event.name, e: event, 
                       links: ['/', acct, '/events'], link_names: ['Home', acct_link, 'Events'],
                       info: 'This event is full.  Please contact the event supervisor.'});
-              else if (event.registrants.includes('"' + String(account._id)) + '"')
+              else if (event.registrants.includes('"' + account._id + '"'))
                   res.render('event', {title: 'Alpha Labs' + event.name, e: event,
                       links: ['/', acct, '/events'], link_names: ['Home', acct_link, 'Events'],
                       info: 'You are already registered for this event.'});
