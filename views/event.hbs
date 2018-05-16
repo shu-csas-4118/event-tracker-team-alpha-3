@@ -21,9 +21,15 @@
 
 
   <div>
-    <center>
-      <button id="button" class="btn btn-lg btn-info" data-toggle="collapse" data-target="#Registration">Register</button>
-    </center>
+      <script>
+          function createButton() {
+              if ({{a}})
+                  document.write('<button id="button" class="btn btn-lg btn-info" data-toggle="collapse" data-target="#Registration">Register</button>');
+              else
+                  document.write('<a class="btn btn-lg btn-info" href="/account/login">Login</a>');
+          }
+          createButton();
+      </script>
     <div id="Registration" class="collapse"class=".event_form">
       <br>
     <form id="event-register"class="form-signin" action="/event/{{e._id}}/register" method="post">
@@ -51,7 +57,7 @@
            class="form-control" placeholder="{{user.address}}">
         </div>
 
-        <center><input type="submit" id="paypal-button"></input></center>
+        <center><div id="paypal-button"></div></center>
       </form>
   </div>
 

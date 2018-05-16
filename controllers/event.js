@@ -16,15 +16,18 @@ router.get('/:e', function (req, res) {
   const event_id = req.params.e;
   var acct;
   var acct_link;
+  var reg_button;
   if (req.user) {
     acct = '/account/profile';
     acct_link = 'Profile'
+      reg_button = true;
   } else {
     acct = '/account/login';
     acct_link = 'Login';
+    reg_button = false;
   }
   Event.findOne({_id: event_id}, function(error, event) {
-    res.render('event', { title: 'Alpha Labs: ' + event.name, e: event,
+    res.render('event', { title: 'Alpha Labs: ' + event.name, e: event, a: reg_button,
     links: ['/', acct, '/events'], link_names: ['Home', acct_link, 'Events'], user: req.user});
   })
 });
@@ -54,7 +57,7 @@ router.post('/:e/register', function(req, res, next) {
               console.log('"' + account._id + '"');
               console.log(event.registrants);
               if (event.currentRegs >= event.maxRegistrants)
-                  res.render('event', {title: 'Alpha Labs' + event.name, e: event, 
+                  res.render('event', {title: 'Alpha Labs' + event.name, e: event,
                       links: ['/', acct, '/events'], link_names: ['Home', acct_link, 'Events'],
                       info: 'This event is full.  Please contact the event supervisor.'});
               else if (event.registrants.includes('"' + account._id + '"'))
