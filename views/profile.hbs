@@ -6,14 +6,14 @@
       event_names = '{{names}}';
       events = '{{account.events}}';
       if (events === '')
-        document.write('<div class="event-proto">' + "<h6> No events </h6>" + "</div>");
+        document.write('<center><div class="event-proto">' + "<h6> No events </h6>" + "</div></center>");
       else {
         events = events.split(',');
         names = event_names.split(',');
         console.log(events);
         console.log(names);
         for (var i = 0; i < events.length; i++) {
-          document.write('<a class="btn btn-lg btn-primary btn-block" href="/event/' +
+          document.write('<a style="width:600px;" class="btn btn-lg btn-primary btn-block" href="/event/' +
                           events[i] + '">' + names[i] + '</a>');
         }
       }
@@ -22,6 +22,7 @@
   </head>
 
   <body>
+    <center>
     <div class="profile-info">
       <h4> First name: {{account.first}} </h4>
     </div>
@@ -43,5 +44,6 @@
         Logout
       </button>
     </form>
+  </center>
   </body>
 </html>

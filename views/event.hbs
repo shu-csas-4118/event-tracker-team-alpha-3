@@ -8,13 +8,35 @@
 
 <body class="text-center" data-gr-c-s-loaded="true">
 
+  <script>
+  function printDate(type, date) {
+    document.write('Event ' + type + ' on: ' + date.substring(0,16));
+  }
+  </script>
+
 
   <div><bold><center><font size="+5"><ins>{{e.name}}</ins></font></center></bold></div>
   <div><center><font size="+2">Email: {{e.email}}</font></center></div>
   <div><center><font size="+2">Supervisor: {{e.supervisor}}</font></center></div>
   <div><center><font size="+2">The Address: {{e.address}}</font></center></div>
-  <div><center><font size="+2">Event starts on {{e.startDate}}</font></center></div>
-  <div><center><font size="+2">Event starts ends {{e.endDate}}</font></center></div>
+  <div>
+    <center>
+      <font size="+2">
+        <script>
+        printDate('starts', '{{e.startDate}}');
+        </script>
+      </font>
+    </center>
+  </div>
+  <div>
+    <center>
+      <font size="+2">
+        <script>
+        printDate('ends', '{{e.endDate}}');
+        </script>
+      </font>
+    </center>
+  </div>
   <div><center><font size="+2">Capacity: {{e.currentRegs}}/{{e.maxRegistrants}}</font></center></div>
   <div><center><font size="+3"><ins>Event Info</ins></font></center></div>
   <div><center><font size="+2">{{e.comments}}</font></center></div><br><br>
@@ -22,10 +44,12 @@
   <div>
       <script>
           function createButton() {
-              if ({{a}})
+              if ('{{a}}' === 'register')
                   document.write('<button id="button" class="btn btn-lg btn-info" data-toggle="collapse" data-target="#Registration">Register</button>');
-              else
+              else if ('{{a}}' === 'login')
                   document.write('<a class="btn btn-lg btn-info" href="/account/login">Login</a>');
+              else
+                document.write('<div><font size="+3">Event is full</font></div>');
           }
           createButton();
       </script>
@@ -107,7 +131,7 @@
                     '<button class="btn btn-lg btn-primary btn-block" type="submit">Register</button>'
 
             });
-            
+
         }
 
 

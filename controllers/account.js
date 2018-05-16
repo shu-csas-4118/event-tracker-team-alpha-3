@@ -11,11 +11,11 @@ const Event = require('../models/event');
     log another user in, so head straight to the profile page.
 */
 router.get('/login', function (req, res) {
-  if (!req.user)
-    res.render('login', { title: 'Alpha Labs: Login', links: ['/', '/events'],
-    link_names: ['Home', 'Events']});
-  else
-    res.redirect('/account/profile');
+    if (!req.user)
+        res.render('login', { title: 'Alpha Labs: Login', links: ['/', '/events'],
+                    link_names: ['Home', 'Events']});
+    else
+        res.redirect('/account/profile');
 });
 
 /*
@@ -26,21 +26,21 @@ router.get('/login', function (req, res) {
     it will log the user into the session and redirect to the homepage.
 */
 router.post('/login', function (req, res, next) {
-  passport.authenticate('local', function (error, account, info) {
-    if (error)
-      return next(error);
-    if (info)
-      return res.render('login', { error: info.message,
-      links: ['/', '/events'], link_names: ['Home', 'Events'] });
+    passport.authenticate('local', function (error, account, info) {
+        if (error)
+            return next(error);
+        if (info)
+            return res.render('login', { error: info.message,
+                links: ['/', '/events'], link_names: ['Home', 'Events'] });
     else {
-      req.login(account, function (error) {
-          if (error)
-              return next(error);
-          else
-              return res.redirect('/account/profile');
-      });
-    }
-  })(req, res, next);
+        req.login(account, function (error) {
+            if (error)
+                return next(error);
+            else
+                return res.redirect('/account/profile');
+            });
+        }
+    })(req, res, next);
 });
 
 /*
@@ -49,11 +49,11 @@ router.post('/login', function (req, res, next) {
     user to their profile page.
 */
 router.get('/register', function (req, res) {
-  if (req.user)
-    res.redirect('/account/profile');
-  else
-    res.render('register', { title: 'Alpha Labs: Register',
-    links: ['/', '/events'], link_names: ['Home', 'Events'] });
+    if (req.user)
+        res.redirect('/account/profile');
+    else
+        res.render('register', { title: 'Alpha Labs: Register',
+        links: ['/', '/events'], link_names: ['Home', 'Events'] });
 });
 
 /*
@@ -64,27 +64,26 @@ router.get('/register', function (req, res) {
     authenticate the new account and redirect to the homepage.
 */
 router.post('/register', function (req, res, next) {
-
-  if (req.body.user_password !== req.body.user_repassword)
-    res.render('register', {error: 'The passwords do not match.'});
-  else {
-    Account.register(new Account({
-        username: req.body.user_mail,
-        first: req.body.user_firstname,
-        last: req.body.user_lastname,
-        admin: false,
-        address: req.body.user_address,
-        events: []
-    }), req.body.user_password, function (error, account) {
-        if (error) {
-            return res.render('register',
-            { error: "Oops! That username already exists.  Try again.",
-             links: ['/', '/account/login', '/events'],
-             link_names: ['Home', 'Login', 'Events']});
-        }
-        passport.authenticate('local', res.redirect('/'));
-    });
-  }
+    if (req.body.user_password !== req.body.user_repassword)
+        res.render('register', {error: 'The passwords do not match.'});
+    else {
+        Account.register(new Account({
+            username: req.body.user_mail,
+            first: req.body.user_firstname,
+            last: req.body.user_lastname,
+            admin: false,
+            address: req.body.user_address,
+            events: []
+        }), req.body.user_password, function (error, account) {
+            if (error) {
+                return res.render('register',
+                { error: "Oops! That username already exists.  Try again.",
+                 links: ['/', '/account/login', '/events'],
+                 link_names: ['Home', 'Login', 'Events']});
+            }
+            passport.authenticate('local', res.redirect('/'));
+        });
+    }
 });
 
 /*
@@ -94,20 +93,19 @@ router.post('/register', function (req, res, next) {
     render the profile page with the user's data.
 */
 router.get('/profile', function (req, res, next) {
-  if (!req.user)
-    res.redirect('/account/login');
-  else {
-    const events = req.user.events;
-    console.log(events);
-    var event_names = [];
-    for (let i = 0; i < events.length; i++) {
-      Event.findOne({_id: events[i]}, function(error, event) {
-        event_names.push(event.name);
-      })
-    }
+    if (!req.user)
+        res.redirect('/account/login');
+    else {
+        const events = req.user.events;
+        var event_names = [];
+        for (let i = 0; i < events.length; i++) {
+            Event.findOne({_id: events[i]}, function(error, event) {
+                event_names.push(event.name);
+            })
+        }
     res.render('profile', { title: 'profile', account: req.user,
-      names: event_names, links: ['/', '/events'], link_names: ['Home', 'Events']});
-  }
+        names: event_names, links: ['/', '/events'], link_names: ['Home', 'Events']});
+    }
 });
 
 /*
@@ -115,8 +113,8 @@ router.get('/profile', function (req, res, next) {
     Logs the user out of the session, then redirects the user to the home page.
 */
 router.post('/logout', function(req, res, next) {
-  req.logout();
-  res.redirect('/');
+    req.logout();
+    res.redirect('/');
 });
 
 module.exports = router;

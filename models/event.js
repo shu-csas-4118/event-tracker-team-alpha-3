@@ -16,16 +16,46 @@ const Schema = mongoose.Schema;
 
 const eventSchema = new Schema(
     {
-        name: String,
-        email: String,
-        supervisor: String,
-        address: String,
-        startDate: Date,
-        endDate: Date,
-        comments: Array,
-        registrants: Array,
-        maxRegistrants: Number,
-        currentRegs: Number,
+        name: {
+          type: String,
+          required: true
+        },
+        email: {
+          type: String,
+          required: true
+        },
+        supervisor: {
+          type: String,
+          required: true
+        },
+        address: {
+          type: String,
+          required: true
+        },
+        startDate: {
+          type: Date,
+          required: true
+        },
+        endDate: {
+          type: Date,
+          required: true
+        },
+        comments: {
+          type: String,
+          required: false
+        },
+        registrants: {
+          type: Array,
+          required: true
+        },
+        maxRegistrants: {
+          type: Number,
+          required: true
+        },
+        currentRegs: {
+          type: Number,
+          required: true
+        }
     }
 );
 
