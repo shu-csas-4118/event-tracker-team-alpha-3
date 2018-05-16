@@ -8,6 +8,7 @@ const router = express.Router();
     will render the index page with the login link in the navbar.
 */
 router.get('/', function(req, res, next) {
+    console.log(req.user);
     if (req.user)
         res.render('index', { title: 'Alpha Labs',
         links:['/account/profile', '/events'], link_names: ['Profile', 'Events'] });
