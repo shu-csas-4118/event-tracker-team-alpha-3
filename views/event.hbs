@@ -58,6 +58,7 @@
         </div>
 
         <center><div id="paypal-button"></div></center>
+        <center><div id="finalize-register"></div></center>
       </form>
   </div>
 
@@ -103,6 +104,8 @@
 
             return actions.payment.execute().then(function() {
                 window.alert('Payment Complete!');
+                document.getElementById("finalize-register").innerHTML =
+                    '<button class="btn btn-lg btn-primary btn-block" type="submit">Register</button>'
 
             });
             
