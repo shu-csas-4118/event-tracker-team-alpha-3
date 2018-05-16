@@ -36,7 +36,27 @@ router.get('/:e', function (req, res) {
     error in registering, re-renders the registration page with the proper error.
 */
 router.post('/:e/register', function(req, res, next) {
-
+  const E = req.params.e;
+  const A = req.user;
+  Event.findOne({_id: E}, function(error, event) {
+    if (event.currentRegs >= event.maxRegistrants)
+      res.render('event', {title: 'Alpha Labs' + event.name,
+      links: ['/', acct, '/events'], link_names: ['Home', acct_link, 'Events'],
+      info: 'This event is full.  Please contact the event supervisor.'});
+    else if (event.registrants.includes(A._id))
+      res.render('event', {title: 'Alpha Labs' + event.name,
+      links: ['/', acct, '/events'], link_names: ['Home', acct_link, 'Events'],
+      info: 'You are already registered for this event.'
+    });
+    else {
+      event.registrants.push(A._id);
+      event.currentRegs++;
+      Account.findOne({_id: A._id}, function(error, account) {
+        account.events.push(event._id);
+        res.redirect('/');
+      })
+    }
+  })
 });
 
 module.exports = router;
