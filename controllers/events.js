@@ -48,8 +48,8 @@ router.post('/search', function (req, res, next) {
     acct = acct + 'login';
     acct_link = 'Login';
   }
-
-  Event.find({name: req.body.search}, 'name startDate endDate', function (err, events) {
+  var searchReg = new RegExp('.*'.concat(req.body.search).concat('.*'),'i');
+  Event.find({name: searchReg}, 'name startDate endDate', function (err, events) {
     if (err) {
       console.log(err);
     } else {

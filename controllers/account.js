@@ -98,6 +98,7 @@ router.get('/profile', function (req, res, next) {
     res.redirect('/account/login');
   else {
     const events = req.user.events;
+    console.log(events);
     var event_names = [];
     for (let i = 0; i < events.length; i++) {
       Event.findOne({_id: events[i]}, function(error, event) {
