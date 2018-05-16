@@ -3,6 +3,8 @@ h1 {
     font: 50px "Fira Code Retina", Helvetica, Arial, sans-serif;
 }
 
+
+
 a {
   color: #00B7FF;
 }
@@ -26,7 +28,7 @@ body {
   padding: 0%;
   position: fixed;
   text-align: left;
-  background-color: #0b0286;
+  background: linear-gradient(#0b0286,green);
   font-size: x-large;
   padding-right: 5%;
 }
