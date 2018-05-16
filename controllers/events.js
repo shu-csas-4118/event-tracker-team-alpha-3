@@ -38,6 +38,38 @@ router.get('/', function (req, res, next) {
   })
 });
 
+router.post('/search', function (req, res, next) {
+  var acct = '/account/';
+  var acct_link;
+  if (req.user) {
+    acct = acct + 'profile';
+    acct_link = 'Profile';
+  } else {
+    acct = acct + 'login';
+    acct_link = 'Login';
+  }
+
+  Event.find({name: req.body.search}, 'name startDate endDate', function (err, events) {
+    if (err) {
+      console.log(err);
+    } else {
+      let e_links = [], e_names = [], e_starts = [], e_ends = [];
+      for (var i = 0; i < events.length; i++) {
+        e_links.push(events[i]._id);
+        e_names.push(events[i].name);
+        e_starts.push(events[i].startDate);
+        e_ends.push(events[i].endDate);
+      }
+      console.log(e_links);
+      console.log(e_names);
+      res.render('events', {
+        title: 'Alpha Labs: Events', links: ['/', acct], link_names: ['Home', acct_link],
+        elinks: e_links, names: e_names, starts: e_starts, ends: e_ends
+      });
+    }
+  })
+});
+
 router.get('/eventcreation', function (req, res, next) {
   var acct = '/account/';
   var acct_link;
@@ -78,6 +110,7 @@ router.post('/eventcreation', function (req, res, next) {
     }));
   res.redirect('/events');
 });
+
 
 
 

@@ -3,7 +3,13 @@
 <body>
 
   <div>
-    <p></p>
+    <div class="event_button">
+    
+      <form class="eventsearch" action="/events/search" method="post" >
+        Search: <input type="text" name="search" class="form-control">
+        <br>
+      </form>
+    </div>
     <script>
       function printEvents() {
         e_names = '{{names}}';
