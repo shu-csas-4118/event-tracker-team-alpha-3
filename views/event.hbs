@@ -22,9 +22,9 @@
 
   <div>
     <center>
-      <button id="button" class="btn btn-info  btn-lg" data-toggle="collapse" href=".hook" data-target="#Redistration">Register</button>
+      <button id="button" class="btn btn-lg btn-info" data-toggle="collapse" data-target="#Redistration">Register</button>
     </center>
-    <div id="Redistration" class="collapse hook">   
+    <div id="Redistration" class="collapse"class=".event_form">   
       <br>
       <body class="text-center" data-gr-c-s-loaded="true">
     <form class="form-signin" action="/event/{{e._id}}/register" method="post">
@@ -51,14 +51,9 @@
           <input type="text" id="address" name="user_address"
            class="form-control" placeholder="{{user.address}}">
         </div>
-         <center><div id="paypal-button"></div></center>
-        <!--<button  class="btn btn-lg btn-primary btn-block" type="submit"
-          id="submit" value="Register">
-          Register
-        </button>-->
-      </form>  
-      <br><br>
-     
+        
+        <center><div id="paypal-button"></div></center>
+      </form>       
       <br><br>
     </div> 
     
@@ -66,42 +61,54 @@
   
 
   <script lang="Javascript">
-    
-
+  
     paypal.Button.render({
-      env: 'production', // Or 'sandbox',
 
-      commit: true, // Show a 'Pay Now' button
+      env: 'sandbox', // sandbox | production
 
-      style: {
-        color: 'gold',
-        size: 'small'
-      },
+        // Specify the style of the button
 
-      payment: function (data, actions) {
-        /*
-         * Set up the payment here
-         */
-      },
+        style: {            
+            size:  'small', // small | medium | large | responsive
+            color: 'gold'   // gold | blue | silver | black
+        },
 
-      onAuthorize: function (data, actions) {
-        /*
-         * Execute the payment here
-         */
-      },
+        // PayPal Client IDs - replace with your own
+        // Create a PayPal app: https://developer.paypal.com/developer/applications/create
 
-      onCancel: function (data, actions) {
-        /*
-         * Buyer cancelled the payment
-         */
-      },
+        client: {
+            sandbox:    'AZDxjDScFpQtjWTOUtWKbyN_bDt4OgqaF4eYXlewfBP4-8aqX3PiV8e1GWU6liB2CUXlkA59kJXE7M6R',
+            production: '<insert production client id>'
+        },
 
-      onError: function (err) {
-        /*
-         * An error occurred during the transaction
-         */
-      }
+        // Wait for the PayPal button to be clicked
+
+        payment: function(data, actions) {
+            return actions.payment.create({
+                payment: {
+                    transactions: [
+                        {
+                            amount: { total: '0.01', currency: 'USD' }
+                        }
+                    ]
+                }
+            });
+        },
+
+        // Wait for the payment to be authorized by the customer
+
+        onAuthorize: function(data, actions) {
+          
+            return actions.payment.execute().then(function() {
+                window.alert('Payment Complete!');
+            });
+        }
+           
+     
     }, '#paypal-button');
+
+
+    
   </script>
 
 </body>
